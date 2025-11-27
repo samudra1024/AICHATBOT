@@ -1,6 +1,7 @@
 import Chat from '../models/Chat.js';
 import { callGemma, detectLanguage } from '../utils/gemmaService.js';
 import { detectEmergency, getEmergencyResponse } from '../utils/emergencyDetector.js';
+import { extractAppointmentDetails, autoBookAppointment, hasBookingIntent } from '../utils/aiAppointmentService.js';
 
 // Send message and get AI response
 export const sendMessage = async (req, res) => {
@@ -50,13 +51,43 @@ export const sendMessage = async (req, res) => {
       chat = new Chat({ userId, messages: [], language: detectedLanguage });
     }
 
+    // Check for appointment booking intent
+    let appointmentBooked = false;
+    let appointmentResponse = '';
+    
+    console.log('Checking booking intent for message:', message);
+    const hasIntent = hasBookingIntent(message);
+    console.log('Has booking intent:', hasIntent);
+    
+    if (hasIntent) {
+      console.log('Extracting appointment details...');
+      const appointmentDetails = extractAppointmentDetails(message, chat.messages);
+      console.log('Extracted details:', appointmentDetails);
+      
+      if (appointmentDetails && appointmentDetails.hasAppointmentIntent) {
+        console.log('Attempting to book appointment...');
+        const bookingResult = await autoBookAppointment(userId, appointmentDetails);
+        console.log('Booking result:', bookingResult);
+        
+        if (bookingResult.success) {
+          appointmentBooked = true;
+          appointmentResponse = bookingResult.message;
+        } else {
+          appointmentResponse = bookingResult.message;
+        }
+      }
+    }
+
     // Call Gemma-3 AI
     const aiResponse = await callGemma(message, detectedLanguage, chat.messages);
+    
+    // Use appointment response if booking was attempted, otherwise use AI response
+    const finalResponse = appointmentResponse || aiResponse.response;
 
     // Save conversation
     chat.messages.push(
       { role: 'user', content: message },
-      { role: 'assistant', content: aiResponse.response }
+      { role: 'assistant', content: finalResponse }
     );
     chat.language = detectedLanguage;
     chat.lastUpdated = new Date();
@@ -64,9 +95,10 @@ export const sendMessage = async (req, res) => {
 
     res.status(200).json({
       success: true,
-      response: aiResponse.response,
+      response: finalResponse,
       language: detectedLanguage,
-      isEmergency: false
+      isEmergency: false,
+      appointmentBooked
     });
 
   } catch (error) {
