@@ -144,8 +144,6 @@ JWT_SECRET=your_super_secret_jwt_key_change_this_in_production_12345
 PORT=5000
 NODE_ENV=development
 OLLAMA_URL=http://localhost:11434
-WHATSAPP_API_KEY=your_whatsapp_api_key
-WHATSAPP_PHONE_NUMBER_ID=your_phone_number_id
 ```
 
 ### 4. Seed the Enhanced Database
@@ -281,6 +279,7 @@ The application will be available at:
 
 Intelligent language detection with comprehensive regional support:
 
+- 🇮🇳 **Kannada** (ಕನ್ನಡ) - Complete medical vocabulary
 - 🇬🇧 **English** (Default with medical terminology)
 - 🇮🇳 **Hindi** (हिंदी) - Complete medical vocabulary
 - 🇮🇳 **Tamil** (தமிழ்) - Regional medical terms
@@ -431,15 +430,6 @@ echo "PORT=5001" >> Backend/.env
 netstat -tulpn | grep :5000
 ```
 
-### WhatsApp Integration Issues
-```bash
-# Verify WhatsApp Business API credentials
-# Check WHATSAPP_API_KEY and WHATSAPP_PHONE_NUMBER_ID in .env
-
-# Test webhook connectivity
-curl -X POST "https://your-webhook-url/webhook" -H "Content-Type: application/json"
-```
-
 ### Performance Optimization
 ```bash
 # Enable MongoDB indexing
@@ -450,88 +440,6 @@ node --max-old-space-size=4096 server.js
 
 # Enable compression
 # Already configured in server.js
-```
-
-## 🚀 **Production Deployment Guide**
-
-### Backend Deployment (Recommended: AWS/DigitalOcean)
-```bash
-# Build for production
-npm run build
-
-# Environment setup
-export NODE_ENV=production
-export MONGODB_URI="mongodb+srv://user:pass@cluster.mongodb.net/medibot"
-export JWT_SECRET="your-super-secure-jwt-secret-256-bit"
-export WHATSAPP_API_KEY="your-whatsapp-business-api-key"
-
-# Start with PM2 (recommended)
-npm install -g pm2
-pm2 start server.js --name "medibot-api"
-pm2 startup
-pm2 save
-```
-
-### Ollama Deployment (GPU Server Required)
-```bash
-# Install on Ubuntu/CentOS server with GPU
-curl -fsSL https://ollama.ai/install.sh | sh
-
-# Pull Gemma-3 model
-ollama pull gemma3:latest
-
-# Run as service
-sudo systemctl enable ollama
-sudo systemctl start ollama
-
-# Configure firewall
-sudo ufw allow 11434
-```
-
-### Frontend Deployment (Vercel/Netlify)
-```bash
-# Build optimized production bundle
-npm run build
-
-# Deploy to Vercel
-npx vercel --prod
-
-# Or deploy to Netlify
-netlify deploy --prod --dir=dist
-
-# Update API base URL
-# Set VITE_API_URL=https://your-api-domain.com/api
-```
-
-### Database Setup (MongoDB Atlas)
-```bash
-# Create cluster on MongoDB Atlas
-# Configure network access (0.0.0.0/0 for development)
-# Create database user with read/write permissions
-# Get connection string and update MONGODB_URI
-```
-
-### SSL/HTTPS Configuration
-```bash
-# Using Let's Encrypt with Nginx
-sudo apt install certbot python3-certbot-nginx
-sudo certbot --nginx -d your-domain.com
-
-# Auto-renewal
-sudo crontab -e
-# Add: 0 12 * * * /usr/bin/certbot renew --quiet
-```
-
-### Monitoring & Logging
-```bash
-# Install monitoring tools
-npm install winston morgan helmet
-
-# Set up log rotation
-sudo apt install logrotate
-
-# Configure health checks
-# GET /api/health endpoint already implemented
 ```
 
 ## 📊 **System Capabilities Summary**
