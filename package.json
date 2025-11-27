@@ -1,0 +1,26 @@
+{
+  "name": "medibot-hospital-chatbot",
+  "version": "1.0.0",
+  "description": "MediBot - AI Hospital Reception Chatbot (MERN Stack with Gemma-3)",
+  "scripts": {
+    "install-all": "cd Backend && npm install && cd ../Frontend && npm install",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "server": "cd Backend && npm run dev",
+    "client": "cd Frontend && npm run dev",
+    "seed": "cd Backend && npm run seed",
+    "build": "cd Frontend && npm run build"
+  },
+  "keywords": [
+    "hospital",
+    "chatbot",
+    "ai",
+    "gemma",
+    "mern",
+    "healthcare"
+  ],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}

@@ -1,0 +1,237 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    @apply m-0 p-0 box-border;
+  }
+
+  body {
+    @apply font-sans bg-gray-50 text-slate-900 leading-relaxed;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-bold leading-tight text-slate-900;
+  }
+
+  h1 {
+    @apply text-4xl;
+  }
+
+  h2 {
+    @apply text-3xl;
+  }
+
+  h3 {
+    @apply text-2xl;
+  }
+
+  h4 {
+    @apply text-xl;
+  }
+
+  h5 {
+    @apply text-lg;
+  }
+
+  h6 {
+    @apply text-base;
+  }
+}
+
+@layer components {
+
+  /* Scrollbar Styling */
+  ::-webkit-scrollbar {
+    @apply w-2 h-2;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-gray-200;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-slate-400 rounded-full;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-slate-500;
+  }
+
+  /* Utility Classes */
+  .container {
+    @apply max-w-7xl mx-auto px-6;
+  }
+
+  .glass {
+    @apply bg-white/85 backdrop-blur-lg border border-white/30;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+  }
+
+  .card {
+    @apply bg-white rounded-2xl p-6 transition-all duration-300;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  }
+
+  .card:hover {
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
+    @apply -translate-y-0.5;
+  }
+
+  /* Button Styles */
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 px-6 py-3 text-base font-semibold border-0 rounded-xl cursor-pointer transition-all duration-300 no-underline outline-none;
+  }
+
+  .btn:disabled {
+    @apply opacity-60 cursor-not-allowed;
+  }
+
+  .btn-primary {
+    @apply bg-gradient-to-br from-primary to-secondary text-white;
+    box-shadow: 0 4px 12px rgba(0, 102, 204, 0.3);
+  }
+
+  .btn-primary:hover:not(:disabled) {
+    @apply -translate-y-0.5;
+    box-shadow: 0 6px 16px rgba(0, 102, 204, 0.4);
+  }
+
+  .btn-secondary {
+    @apply bg-gray-200 text-slate-900;
+  }
+
+  .btn-secondary:hover:not(:disabled) {
+    @apply bg-gray-300;
+  }
+
+  .btn-danger {
+    @apply bg-accent text-white;
+  }
+
+  .btn-danger:hover:not(:disabled) {
+    @apply -translate-y-0.5;
+    background: #ff5252;
+  }
+
+  .btn-sm {
+    @apply px-4 py-2 text-sm;
+  }
+
+  .btn-lg {
+    @apply px-8 py-4 text-lg;
+  }
+
+  /* Input Styles */
+  .input {
+    @apply w-full px-4 py-3.5 text-base font-sans bg-white border-2 border-gray-300 rounded-xl transition-all duration-300 outline-none;
+  }
+
+  .input:focus {
+    @apply border-primary;
+    box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.1);
+  }
+
+  .input::placeholder {
+    @apply text-slate-400;
+  }
+
+  .input-group {
+    @apply mb-5;
+  }
+
+  .input-label {
+    @apply block mb-2 font-semibold text-slate-900 text-sm;
+  }
+
+  /* Loading Spinner */
+  .spinner {
+    @apply w-10 h-10 border-4 border-gray-300 border-t-primary rounded-full animate-spin;
+  }
+
+  /* Fade In Animation */
+  .fade-in {
+    animation: fadeIn 0.4s ease-out;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Pulse Animation */
+  .pulse {
+    @apply animate-pulse;
+  }
+
+  /* Badge */
+  .badge {
+    @apply inline-flex items-center px-3 py-1 text-xs font-semibold rounded-full uppercase tracking-wide;
+  }
+
+  .badge-success {
+    @apply bg-green-100 text-green-800;
+  }
+
+  .badge-warning {
+    @apply bg-yellow-100 text-yellow-800;
+  }
+
+  .badge-danger {
+    @apply bg-red-100 text-red-800;
+  }
+
+  .badge-info {
+    @apply bg-blue-100 text-blue-800;
+  }
+
+  /* Alert */
+  .alert {
+    @apply px-5 py-4 rounded-xl mb-4 border-l-4;
+  }
+
+  .alert-success {
+    @apply bg-green-100 border-green-500 text-green-800;
+  }
+
+  .alert-error {
+    @apply bg-red-100 border-red-500 text-red-800;
+  }
+
+  .alert-warning {
+    @apply bg-yellow-100 border-yellow-500 text-yellow-800;
+  }
+
+  .alert-info {
+    @apply bg-blue-100 border-blue-500 text-blue-800;
+  }
+
+  /* Modal Overlay */
+  .modal-overlay {
+    @apply fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-[1000];
+    animation: fadeIn 0.2s ease-out;
+  }
+
+  .modal {
+    @apply bg-white rounded-3xl p-8 max-w-lg w-11/12 max-h-[90vh] overflow-y-auto;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    animation: fadeIn 0.3s ease-out;
+  }
+}
