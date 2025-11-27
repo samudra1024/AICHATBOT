@@ -106,7 +106,7 @@ const AdminPanel = () => {
                             <td className="px-4 py-4 border-b border-gray-300">{doctor.department}</td>
                             <td className="px-4 py-4 border-b border-gray-300">{doctor.specialization}</td>
                             <td className="px-4 py-4 border-b border-gray-300">{doctor.experience} years</td>
-                            <td className="px-4 py-4 border-b border-gray-300">₹{doctor.fees}</td>
+                            <td className="px-4 py-4 border-b border-gray-300">₹{doctor.fees?.consultation || 'N/A'}</td>
                           </tr>
                         ))}
                       </tbody>
