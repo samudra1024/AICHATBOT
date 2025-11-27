@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import api from '../services/api';
+import { toast } from 'react-toastify';
 
 const BookingModal = ({ doctor, onClose, onSuccess }) => {
   const [selectedDate, setSelectedDate] = useState(new Date().toISOString().split('T')[0]);
@@ -28,6 +29,7 @@ const BookingModal = ({ doctor, onClose, onSuccess }) => {
       }
     } catch (err) {
       setError('Failed to fetch availability');
+      toast.error('Failed to fetch availability');
     } finally {
       setLoading(false);
     }
@@ -54,10 +56,13 @@ const BookingModal = ({ doctor, onClose, onSuccess }) => {
 
       if (response.data.success) {
         onSuccess(response.data.appointment);
+        toast.success('Appointment booked successfully!');
         onClose();
       }
     } catch (err) {
-      setError(err.response?.data?.message || 'Booking failed');
+      const errorMsg = err.response?.data?.message || 'Booking failed';
+      setError(errorMsg);
+      toast.error(errorMsg);
     } finally {
       setBookingLoading(false);
     }

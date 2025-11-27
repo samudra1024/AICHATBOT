@@ -139,7 +139,7 @@ export const updateLanguage = async (req, res) => {
     const { language } = req.body;
     const userId = req.userId;
 
-    const validLanguages = ['English', 'Hindi', 'Tamil', 'Telugu', 'Bengali', 'Marathi'];
+    const validLanguages = ['English', 'Hindi', 'Tamil', 'Telugu', 'Bengali', 'Marathi', 'Kannada'];
 
     if (!validLanguages.includes(language)) {
       return res.status(400).json({

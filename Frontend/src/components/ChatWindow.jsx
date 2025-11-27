@@ -7,6 +7,7 @@ import BookingModal from './BookingModal';
 import FeeStructureModal from './FeeStructureModal';
 import DepartmentListModal from './DepartmentListModal';
 import HospitalInfoModal from './HospitalInfoModal';
+import { toast } from "react-toastify";
 
 const ChatWindow = () => {
   const { user, logout } = useAuth();
@@ -24,7 +25,7 @@ const ChatWindow = () => {
   const [selectedDoctor, setSelectedDoctor] = useState(null);
   const [showQuickTaskDropdown, setShowQuickTaskDropdown] = useState(false);
 
-  const languages = ['English', 'Hindi', 'Tamil', 'Telugu', 'Bengali', 'Marathi'];
+  const languages = ['English', 'Hindi', 'Tamil', 'Telugu', 'Bengali', 'Marathi', 'Kannada'];
 
   useEffect(() => {
     loadChatHistory();
@@ -47,6 +48,7 @@ const ChatWindow = () => {
       }
     } catch (error) {
       console.error('Error loading chat history:', error);
+      toast.error('Failed to load chat history');
     }
   };
 
@@ -87,6 +89,7 @@ const ChatWindow = () => {
         timestamp: new Date()
       };
       setMessages(prev => [...prev, errorMessage]);
+      toast.error('Failed to send message. Please try again.');
     } finally {
       setLoading(false);
     }
@@ -99,9 +102,10 @@ const ChatWindow = () => {
       const response = await api.delete('/chat/clear');
       if (response.data.success) {
         setMessages([]);
+        toast.success('Chat history cleared successfully', { autoClose: 2000 })
       }
     } catch (error) {
-      alert('Failed to clear chat');
+      toast.error('Failed to clear chat');
     }
   };
 
@@ -109,8 +113,10 @@ const ChatWindow = () => {
     setLanguage(newLang);
     try {
       await api.put('/chat/language', { language: newLang });
+      toast.success(`Language changed to ${newLang}`);
     } catch (error) {
       console.error('Error updating language:', error);
+      toast.error('Failed to update language');
     }
   };
 
@@ -135,17 +141,17 @@ const ChatWindow = () => {
   };
 
   return (
-    <div className="h-screen flex flex-col bg-gradient-to-br from-purple-500 to-purple-700">
+    <div className="h-screen flex flex-col bg-gradient-to-br from-medical-blue via-primary to-medical-teal">
       {/* Header */}
-      <div className="glass flex justify-between items-center px-6 py-4 border-b border-gray-300">
+      <div className="glass flex justify-between items-center px-6 py-4 border-b border-neutral-200/50">
         <div className="flex items-center gap-4">
-          <div className="w-12 h-12 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center text-2xl shadow-md">
-            🤖
+          <div className="w-12 h-12 rounded-full bg-gradient-to-br from-medical-blue to-medical-teal flex items-center justify-center text-2xl shadow-lg">
+            🏥
           </div>
           <div>
             <h3 className="text-xl font-bold m-0">MediBot</h3>
-            <p className="flex items-center gap-2 text-sm text-slate-500 m-0">
-              <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse-slow"></span> Online
+            <p className="flex items-center gap-2 text-sm text-neutral-600 m-0">
+              <span className="w-2 h-2 rounded-full bg-secondary animate-pulse-slow"></span> Online
             </p>
           </div>
         </div>
@@ -154,7 +160,7 @@ const ChatWindow = () => {
           {/* QuickTask Dropdown */}
           <div className="relative">
             <button
-              className="px-4 py-2 border-2 border-gray-300 rounded-xl bg-white text-sm font-semibold cursor-pointer transition-all duration-300 hover:border-primary focus:border-primary focus:outline-none flex items-center gap-2"
+              className="px-4 py-2 border-2 border-neutral-200 rounded-xl bg-white/95 text-sm font-semibold cursor-pointer transition-all duration-300 hover:border-primary hover:bg-white hover:shadow-lg focus:border-primary focus:outline-none flex items-center gap-2"
               onClick={() => setShowQuickTaskDropdown(!showQuickTaskDropdown)}
             >
               ⚡ QuickTask
@@ -162,7 +168,7 @@ const ChatWindow = () => {
             </button>
             
             {showQuickTaskDropdown && (
-              <div className="absolute top-full left-0 mt-2 w-56 bg-white rounded-xl shadow-lg border border-gray-200 z-50">
+              <div className="absolute top-full left-0 mt-2 w-56 bg-white/95 backdrop-blur-xl rounded-xl shadow-xl border border-neutral-200/50 z-50">
                 <div className="py-2">
                   <button
                     className="w-full px-4 py-3 text-left hover:bg-gray-50 transition-colors duration-200 flex items-center gap-3 text-sm font-medium"
@@ -215,7 +221,7 @@ const ChatWindow = () => {
           </div>
 
           <select
-            className="px-4 py-2 border-2 border-gray-300 rounded-xl bg-white text-sm font-semibold cursor-pointer transition-all duration-300 focus:border-primary focus:outline-none"
+            className="px-4 py-2 border-2 border-neutral-200 rounded-xl bg-white/95 text-sm font-semibold cursor-pointer transition-all duration-300 hover:border-primary hover:shadow-lg focus:border-primary focus:outline-none"
             value={language}
             onChange={(e) => handleLanguageChange(e.target.value)}
           >
@@ -225,7 +231,7 @@ const ChatWindow = () => {
           </select>
 
           <button
-            className="w-10 h-10 border-0 bg-gray-200 rounded-full text-xl cursor-pointer transition-all duration-300 flex items-center justify-center hover:bg-gray-300 hover:scale-110"
+            className="w-10 h-10 border-0 bg-neutral-100 rounded-full text-xl cursor-pointer transition-all duration-300 flex items-center justify-center hover:bg-neutral-200 hover:scale-110 hover:shadow-lg"
             onClick={handleClearChat}
             title="Clear Chat"
           >
@@ -234,7 +240,7 @@ const ChatWindow = () => {
 
           {user?.isAdmin && (
             <button
-              className="w-10 h-10 border-0 bg-gray-200 rounded-full text-xl cursor-pointer transition-all duration-300 flex items-center justify-center hover:bg-gray-300 hover:scale-110"
+              className="w-10 h-10 border-0 bg-neutral-100 rounded-full text-xl cursor-pointer transition-all duration-300 flex items-center justify-center hover:bg-neutral-200 hover:scale-110 hover:shadow-lg"
               onClick={() => navigate('/admin')}
               title="Admin Panel"
             >
@@ -243,7 +249,7 @@ const ChatWindow = () => {
           )}
 
           <button
-            className="w-10 h-10 border-0 bg-gray-200 rounded-full text-xl cursor-pointer transition-all duration-300 flex items-center justify-center hover:bg-gray-300 hover:scale-110"
+            className="w-10 h-10 border-0 bg-neutral-100 rounded-full text-xl cursor-pointer transition-all duration-300 flex items-center justify-center hover:bg-neutral-200 hover:scale-110 hover:shadow-lg"
             onClick={logout}
             title="Logout"
           >
@@ -253,12 +259,12 @@ const ChatWindow = () => {
       </div>
 
       {/* Messages Area */}
-      <div className="flex-1 overflow-y-auto px-6 py-8 bg-gray-50">
+      <div className="flex-1 overflow-y-auto px-6 py-8 bg-gradient-to-b from-neutral-50 to-white">
         {messages.length === 0 ? (
           <div className="text-center max-w-2xl mx-auto px-4 py-12">
             <div className="text-8xl mb-4 animate-pulse-slow">🏥</div>
             <h2 className="mb-2">Welcome to MediBot!</h2>
-            <p className="text-slate-500 mb-8">Your 24×7 AI Hospital Assistant</p>
+            <p className="text-neutral-600 mb-8">Your 24×7 AI Hospital Assistant</p>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
               <div
                 className="p-4 bg-white rounded-xl shadow-sm font-semibold transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md cursor-pointer"
@@ -291,7 +297,7 @@ const ChatWindow = () => {
                 ℹ️ Hospital Info
               </div>
             </div>
-            <p className="text-slate-400 text-sm">Type a message to get started!</p>
+            <p className="text-neutral-500 text-sm">Type a message to get started!</p>
           </div>
         ) : (
           messages.map((msg, index) => (
@@ -337,11 +343,11 @@ const ChatWindow = () => {
       </div>
 
       {/* Input Area */}
-      <div className="glass px-6 py-4 border-t border-gray-300">
+      <div className="glass px-6 py-4 border-t border-neutral-200/50">
         <form onSubmit={handleSendMessage} className="flex gap-3 items-center">
           <input
             type="text"
-            className="flex-1 px-5 py-3.5 border-2 border-gray-300 rounded-full text-base font-sans bg-white transition-all duration-300 outline-none focus:border-primary focus:shadow-[0_0_0_3px_rgba(0,102,204,0.1)]"
+            className="flex-1 px-5 py-3.5 border-2 border-neutral-200 rounded-full text-base font-sans bg-white/95 transition-all duration-300 outline-none hover:border-primary/50 focus:border-primary focus:bg-white focus:shadow-[0_0_0_3px_rgba(37,99,235,0.1)]"
             placeholder="Type your message..."
             value={inputMessage}
             onChange={(e) => setInputMessage(e.target.value)}
@@ -349,7 +355,7 @@ const ChatWindow = () => {
           />
           <button
             type="submit"
-            className="w-12 h-12 border-0 bg-gradient-to-br from-primary to-secondary rounded-full text-white text-2xl cursor-pointer transition-all duration-300 flex items-center justify-center shadow-md hover:scale-110 hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-12 h-12 border-0 bg-gradient-to-r from-primary to-primary-light rounded-full text-white text-2xl cursor-pointer transition-all duration-300 flex items-center justify-center shadow-lg hover:scale-110 hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed"
             disabled={!inputMessage.trim() || loading}
           >
             <span>📤</span>

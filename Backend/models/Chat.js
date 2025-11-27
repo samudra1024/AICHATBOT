@@ -25,7 +25,7 @@ const chatSchema = new mongoose.Schema({
   messages: [messageSchema],
   language: {
     type: String,
-    enum: ['English', 'Hindi', 'Tamil', 'Telugu', 'Bengali', 'Marathi'],
+    enum: ['English', 'Hindi', 'Tamil', 'Telugu', 'Bengali', 'Marathi', 'Kannada'],
     default: 'English'
   },
   lastUpdated: {

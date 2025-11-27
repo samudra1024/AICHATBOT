@@ -8,15 +8,38 @@ module.exports = {
     extend: {
       colors: {
         primary: {
-          DEFAULT: '#0066CC',
-          dark: '#0052A3',
-          light: '#3385D6',
+          DEFAULT: '#2563eb',
+          dark: '#1d4ed8',
+          light: '#3b82f6',
         },
         secondary: {
-          DEFAULT: '#00C896',
-          dark: '#00A077',
+          DEFAULT: '#10b981',
+          dark: '#059669',
+          light: '#34d399',
         },
-        accent: '#FF6B6B',
+        accent: {
+          DEFAULT: '#f59e0b',
+          dark: '#d97706',
+          light: '#fbbf24',
+        },
+        medical: {
+          blue: '#0ea5e9',
+          green: '#22c55e',
+          teal: '#14b8a6',
+          purple: '#8b5cf6',
+        },
+        neutral: {
+          50: '#f8fafc',
+          100: '#f1f5f9',
+          200: '#e2e8f0',
+          300: '#cbd5e1',
+          400: '#94a3b8',
+          500: '#64748b',
+          600: '#475569',
+          700: '#334155',
+          800: '#1e293b',
+          900: '#0f172a',
+        },
       },
       fontFamily: {
         sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'sans-serif'],

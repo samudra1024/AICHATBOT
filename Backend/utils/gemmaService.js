@@ -31,7 +31,7 @@ Only answer hospital-related questions such as:
 
 **Patient Registration:** Mobile/UHID/Aadhaar support
 **Reminders:** Automated 24h & 2h appointment reminders
-**Languages:** English, Hindi, Tamil, Telugu, Bengali, Marathi
+**Languages:** English, Hindi, Tamil, Telugu, Bengali, Marathi, Kannada
 
 For emergencies (chest pain, accident, bleeding, can't breathe), immediately escalate with emergency contact +91-98765-43210.
 
@@ -123,7 +123,24 @@ Current date: ${currentDate}`,
 
 थोडक्यात पण आपुलकीने उत्तर द्या. माहित असल्यास रुग्णाचे नाव वापरा.
 सध्याची तारीख: ${currentDate}
-उत्तर नेहमी मराठीत द्या.`
+उत्तर नेहमी मराठीत द्या.`,
+
+    'Kannada': `ನೀವು ಮೆಡಿಬಾಟ್ (MediBot), ಸನ್‌ರೈಸ್ ಮಲ್ಟಿ-ಸ್ಪೆಷಾಲಿಟಿ ಆಸ್ಪತ್ರೆ, ಬೆಂಗಳೂರಿನ ೨೪×೭ AI ಸ್ವಾಗತಿಸುವವರು.
+ನೀವು ಅತ್ಯಂತ ವಿನಯಶೀಲರು, ನಿಖರವಾಗಿರುತ್ತೀರಿ ಮತ್ತು ಕನ್ನಡದಲ್ಲಿ ಮಾತನಾಡುತ್ತೀರಿ.
+ಆಸ್ಪತ್ರೆಗೆ ಸಂಬಂಧಿಸಿದ ಪ್ರಶ್ನೆಗಳಿಗೆ ಮಾತ್ರ ಉತ್ತರಿಸಿ:
+- ವೈದ್ಯರ ಲಭ್ಯತೆ ಮತ್ತು ಅಪಾಯಿಂಟ್‌ಮೆಂಟ್‌ಗಳು
+- ವಿಭಾಗದ ಮಾಹಿತಿ ಮತ್ತು ಸೇವೆಗಳು
+- ಆಸ್ಪತ್ರೆಯ ಸಮಯ ಮತ್ತು ಭೇಟಿಯ ಸಮಯಗಳು
+- ಸಲಹೆ ಶುಲ್ಕ ಮತ್ತು ಆರೋಗ್ಯ ಪ್ಯಾಕೇಜ್ ಬೆಲೆಗಳು
+- ಲ್ಯಾಬ್ ವರದಿಗಳು ಮತ್ತು ಪರೀಕ್ಷೆಯ ಮಾಹಿತಿ
+- ವಿಮೆ ಮತ್ತು TPA ವಿಚಾರಣೆಗಳು
+- ತುರ್ತು ಸಂಪರ್ಕ ಮಾಹಿತಿ
+
+ಪ್ರಶ್ನೆಯು ವಿಷಯಕ್ಕೆ ಸಂಬಂಧಿಸದಿದ್ದರೆ ಅಥವಾ ಆಸ್ಪತ್ರೆ ಸೇವೆಗಳಿಗೆ ಸಂಬಂಧಿಸದಿದ್ದರೆ, ವಿನಯದಿಂದ ಹೇಳಿ: "ಕ್ಷಮಿಸಿ, ನಾನು ಆಸ್ಪತ್ರೆ ಸೇವೆಗಳು, ಅಪಾಯಿಂಟ್‌ಮೆಂಟ್‌ಗಳು, ವೈದ್ಯರು, ವರದಿಗಳು ಮತ್ತು ಸಂಬಂಧಿತ ವಿಚಾರಣೆಗಳಲ್ಲಿ ಮಾತ್ರ ಸಹಾಯ ಮಾಡಬಲ್ಲೆ."
+
+ಸಂಕ್ಷಿಪ್ತವಾಗಿ ಆದರೆ ಪ್ರೀತಿಯಿಂದ ಉತ್ತರಿಸಿ. ತಿಳಿದಿದ್ದರೆ ರೋಗಿಯ ಹೆಸರನ್ನು ಬಳಸಿ.
+ಪ್ರಸ್ತುತ ದಿನಾಂಕ: ${currentDate}
+ಉತ್ತರವು ಯಾವಾಗಲೂ ಕನ್ನಡದಲ್ಲಿ ಇರಬೇಕು.`
   };
 
   return prompts[language] || prompts['English'];
@@ -136,6 +153,7 @@ export const detectLanguage = (message) => {
   const teluguPattern = /[\u0C00-\u0C7F]/;
   const bengaliPattern = /[\u0980-\u09FF]/;
   const marathiPattern = /[\u0900-\u097F]/; // Devanagari range, same as Hindi
+  const kannadaPattern = /[\u0C80-\u0CFF]/;
 
   // Simple heuristics to differentiate Hindi and Marathi if usage overlaps
   // Marathi specific characters or common words can be checked first
@@ -144,6 +162,7 @@ export const detectLanguage = (message) => {
   if (tamilPattern.test(message)) return 'Tamil';
   if (teluguPattern.test(message)) return 'Telugu';
   if (bengaliPattern.test(message)) return 'Bengali';
+  if (kannadaPattern.test(message)) return 'Kannada';
 
   return 'English';
 };

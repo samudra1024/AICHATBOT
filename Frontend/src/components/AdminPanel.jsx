@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from '../services/api';
+import { toast } from 'react-toastify';
 
 const AdminPanel = () => {
   const navigate = useNavigate();
@@ -29,6 +30,7 @@ const AdminPanel = () => {
       }
     } catch (error) {
       console.error('Error loading data:', error);
+      toast.error('Failed to load data');
     } finally {
       setLoading(false);
     }

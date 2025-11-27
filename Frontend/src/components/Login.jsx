@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 import api from '../services/api';
+import { toast } from 'react-toastify';
 
 const Login = () => {
   const { login } = useAuth();
@@ -51,9 +52,12 @@ const Login = () => {
 
       if (response.data.success) {
         login(response.data.user, response.data.token);
+        toast.success(isRegister ? 'Account created successfully!' : 'Login successful!');
       }
     } catch (err) {
-      setError(err.response?.data?.message || 'Authentication failed');
+      const errorMsg = err.response?.data?.message || 'Authentication failed';
+      setError(errorMsg);
+      toast.error(errorMsg);
     } finally {
       setLoading(false);
     }

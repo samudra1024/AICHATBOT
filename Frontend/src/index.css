@@ -74,8 +74,8 @@
   }
 
   .glass {
-    @apply bg-white/85 backdrop-blur-lg border border-white/30;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+    @apply bg-white/90 backdrop-blur-xl border border-white/40;
+    box-shadow: 0 10px 40px rgba(37, 99, 235, 0.1);
   }
 
   .card {
@@ -98,13 +98,13 @@
   }
 
   .btn-primary {
-    @apply bg-gradient-to-br from-primary to-secondary text-white;
-    box-shadow: 0 4px 12px rgba(0, 102, 204, 0.3);
+    @apply bg-gradient-to-r from-primary to-primary-light text-white;
+    box-shadow: 0 4px 14px rgba(37, 99, 235, 0.25);
   }
 
   .btn-primary:hover:not(:disabled) {
-    @apply -translate-y-0.5;
-    box-shadow: 0 6px 16px rgba(0, 102, 204, 0.4);
+    @apply -translate-y-0.5 scale-105;
+    box-shadow: 0 8px 25px rgba(37, 99, 235, 0.35);
   }
 
   .btn-secondary {
@@ -233,5 +233,68 @@
     @apply bg-white rounded-3xl p-8 max-w-lg w-11/12 max-h-[90vh] overflow-y-auto;
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
     animation: fadeIn 0.3s ease-out;
+  }
+
+  /* Custom Toast Styles */
+  .custom-toast {
+    @apply rounded-xl shadow-lg border-l-4;
+    backdrop-filter: blur(10px);
+  }
+
+  .custom-toast-body {
+    @apply font-medium;
+  }
+
+  /* Success Toast */
+  .Toastify__toast--success {
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.95) 0%, rgba(5, 150, 105, 0.95) 100%);
+    border-left-color: #10b981;
+    color: white;
+  }
+
+  .Toastify__toast--success .Toastify__progress-bar {
+    background: rgba(255, 255, 255, 0.8);
+  }
+
+  /* Error Toast */
+  .Toastify__toast--error {
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.95) 0%, rgba(220, 38, 38, 0.95) 100%);
+    border-left-color: #ef4444;
+    color: white;
+  }
+
+  .Toastify__toast--error .Toastify__progress-bar {
+    background: rgba(255, 255, 255, 0.8);
+  }
+
+  /* Info Toast */
+  .Toastify__toast--info {
+    background: linear-gradient(135deg, rgba(37, 99, 235, 0.95) 0%, rgba(29, 78, 216, 0.95) 100%);
+    border-left-color: #2563eb;
+    color: white;
+  }
+
+  .Toastify__toast--info .Toastify__progress-bar {
+    background: rgba(255, 255, 255, 0.8);
+  }
+
+  /* Warning Toast */
+  .Toastify__toast--warning {
+    background: linear-gradient(135deg, rgba(245, 158, 11, 0.95) 0%, rgba(217, 119, 6, 0.95) 100%);
+    border-left-color: #f59e0b;
+    color: white;
+  }
+
+  .Toastify__toast--warning .Toastify__progress-bar {
+    background: rgba(255, 255, 255, 0.8);
+  }
+
+  /* Close Button */
+  .Toastify__close-button {
+    color: rgba(255, 255, 255, 0.8);
+  }
+
+  .Toastify__close-button:hover {
+    color: white;
   }
 }
